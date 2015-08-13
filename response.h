@@ -10,17 +10,18 @@
 #define __server__response__
 
 #include <string>
+#include "request.h"
 using namespace std;
 
 class Response {
 private:
     string route;
     string method;
-    void* function;
+    void(*handler)(Request);
 public:
-    Response(string, string, void*);
+    Response(string, string, void(*)(Request));
     bool isMatch(string, string);
-    void* getFunction();
+    void execute(Request);
 };
 
 

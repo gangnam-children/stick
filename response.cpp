@@ -7,3 +7,17 @@
 //
 
 #include "response.h"
+
+Response::Response(string route, string method, void(*func)(Request)) {
+    this->route = route;
+    this->method = method;
+    this->handler = func;
+}
+
+bool Response::isMatch(string route, string method) {
+    return (this->route == route && this->method == method);
+}
+
+void Response::execute(Request req) {
+    this->handler(req);
+}
