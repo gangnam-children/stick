@@ -7,3 +7,13 @@
 //
 
 #include "router.h"
+
+void Router::operator[] (Request req) {
+    
+}
+
+void use(string route, string method, void*) {
+    
+}
+
+Router* Router::instance = NULL;

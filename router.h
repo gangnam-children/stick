@@ -10,13 +10,27 @@
 #define __server__router__
 
 #include <string>
+#include "request.h"
 using namespace std;
 
 class Router {
 private:
+    
+    static Router* instance;
+    
+    Router();
+    ~Router();
+    
 public:
-    void response(string, string);
+    void operator[] (Request);
     void use(string, string, void*);
+    
+    static Router* getInstance() {
+        if (instance == NULL)
+            instance = new Router();
+        
+        return instance;
+    }
 };
 
 #endif /* defined(__server__router__) */
