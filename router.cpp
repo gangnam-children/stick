@@ -8,13 +8,30 @@
 
 #include "router.h"
 
-void Router::operator[] (Request req) {
-    
+Router::Router() {
+    responses.clear();
 }
 
-void use(string route, string method, void(*function)(Request req)) {
-    Response res = new Response(route, method, *function);
-    responses.push_back();
+void Router::operator[] (Request req) {
+    for (int i = 0; i < responses.size(); i++) {
+        if (responses[i].isMatch(req.getRoute(), req.getMethod())) {
+            responses[i].execute(req);
+            break;
+        }
+    }
+}
+
+void Router::handle (Request req) {
+    for (int i = 0; i < responses.size(); i++) {
+        if (responses[i].isMatch(req.getRoute(), req.getMethod())) {
+            responses[i].execute(req);
+            break;
+        }
+    }
+}
+
+void Router::add(Response res) {
+    responses.push_back(res);
 }
 
 Router* Router::instance = NULL;

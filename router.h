@@ -21,11 +21,10 @@ private:
     static Router* instance;
     
     Router();
-    ~Router();
-    
 public:
     void operator[] (Request);
-    void use(string, string, void*);
+    void handle(Request);
+    void add(Response);
     
     static Router* getInstance() {
         if (instance == NULL)
