@@ -10,12 +10,14 @@
 #define __server__router__
 
 #include <string>
+#include <vector>
+#include "response.h"
 #include "request.h"
 using namespace std;
 
 class Router {
 private:
-    
+    vector<Response> responses;
     static Router* instance;
     
     Router();
