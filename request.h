@@ -10,23 +10,22 @@
 #define __server__request__
 
 #include <string>
-#include "json/json.h"
+#include "lightjson.h"
 using namespace std;
 
 class Request {
 private:
     string route;
     string method;
-    Json::Value parameter;
-    Json::Value header;
-    Json::Value body;
+    Json::Object parameter;
+    Json::Object body;
 public:
-    Request(string, string, Json::Value, Json::Value, Json::Value);
+    Request();
+    Request(string, string, Json::Object, Json::Object);
     string getRoute();
     string getMethod();
-    Json::Value getParameter();
-    Json::Value getHeader();
-    Json::Value getBody();
+    Json::Object getParameter();
+    Json::Object getBody();
 };
 
 #endif /* defined(__server__request__) */

@@ -8,11 +8,10 @@
 
 #include "request.h"
 
-Request::Request(string route, string method, Json::Value parameter, Json::Value header, Json::Value body) {
+Request::Request(string route, string method, Json::Object parameter, Json::Object body) {
     this->route = route;
     this->method = method;
     this->parameter = parameter;
-    this->header = header;
     this->body = body;
 }
 
@@ -24,14 +23,10 @@ string Request::getMethod() {
     return method;
 }
 
-Json::Value Request::getParameter() {
+Json::Object Request::getParameter() {
     return parameter;
 }
 
-Json::Value Request::getHeader() {
-    return header;
-}
-
-Json::Value Request::getBody() {
+Json::Object Request::getBody() {
     return body;
 }
