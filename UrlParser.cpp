@@ -2,6 +2,7 @@
 #include "GlobalFunc.h"
 #include <cstdlib>
 #include <string.h>
+#include "fcgi_stdio.h"
 
 UrlParser* UrlParser::GetInstance()
 {
@@ -36,6 +37,7 @@ Request UrlParser::GetRequest()
     char buf[2048];
     memset(buf, 0, 2048);
     fread(buf, sizeof(char), 2048, stdin);
+
     body = reader.decode(buf);
     
     Request req(route, method, parameter, body);
