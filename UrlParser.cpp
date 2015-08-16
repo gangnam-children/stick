@@ -33,7 +33,7 @@ Request UrlParser::GetRequest()
                 parameter[p[0]] = p[1];
         }
     }
-    
+
     char buf[2048];
     memset(buf, 0, 2048);
     fread(buf, sizeof(char), 2048, stdin);

@@ -3,7 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-
+using namespace std;
 
 #define WRITELOG(fmt, ...)	Log::GetInstance()->trace( __FILE__, __LINE__, __PRETTY_FUNCTION__ , fmt, ##__VA_ARGS__);
 

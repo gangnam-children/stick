@@ -3,7 +3,7 @@
 #include<iostream>
 
 
-#define LOG_PATH "server.log"
+#define LOG_PATH "/var/log/lighttpd/server.log"
 
 
 Log* Log::GetInstance()
