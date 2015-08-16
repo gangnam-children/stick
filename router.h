@@ -22,8 +22,7 @@ private:
     
     Router();
 public:
-    void operator[] (Request);
-    void handle(Request);
+    void handle(Request&);
     void add(Response);
     
     static Router* getInstance() {

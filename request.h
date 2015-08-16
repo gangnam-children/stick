@@ -24,7 +24,7 @@ public:
     Request(string, string, Json::Object, Json::Object);
     string getRoute();
     string getMethod();
-    Json::Object getParameter();
+    Json::Object& getParameter();
     Json::Object getBody();
 };
 

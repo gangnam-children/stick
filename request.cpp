@@ -23,7 +23,7 @@ string Request::getMethod() {
     return method;
 }
 
-Json::Object Request::getParameter() {
+Json::Object& Request::getParameter() {
     return parameter;
 }
 

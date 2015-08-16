@@ -12,18 +12,9 @@ Router::Router() {
     responses.clear();
 }
 
-void Router::operator[] (Request req) {
+void Router::handle (Request& req) {
     for (int i = 0; i < responses.size(); i++) {
-        if (responses[i].isMatch(req.getRoute(), req.getMethod())) {
-            responses[i].execute(req);
-            break;
-        }
-    }
-}
-
-void Router::handle (Request req) {
-    for (int i = 0; i < responses.size(); i++) {
-        if (responses[i].isMatch(req.getRoute(), req.getMethod())) {
+        if (responses[i].isMatch(req)) {
             responses[i].execute(req);
             break;
         }
