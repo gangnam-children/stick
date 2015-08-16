@@ -20,7 +20,8 @@ private:
     void(*handler)(Request);
 public:
     Response(string, string, void(*)(Request));
-    bool isMatch(string, string);
+    string getRoute();
+    bool isMatch(Request&);
     void execute(Request);
 };
 
