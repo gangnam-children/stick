@@ -8,7 +8,7 @@ private:
 
     Redis(); 
 public:
-    static Redis* getInstance() {
+    static Redis* GetInstance() {
         if (instance == NULL)
             instance = new Redis();
 

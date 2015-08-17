@@ -1,36 +1,24 @@
-//
-//  main.cpp
-//  server
-//
-//  Created by 정인중 on 2015. 8. 13..
-//  Copyright (c) 2015년 강남어린이들. All rights reserved.
-//
+#include "../lib/json/lightjson.h"
+#include "../lib/string/split.h" 
+#include "../lib/redis/redis.h" 
+#include "../lib/log/Log.h"
 
-#include <string.h>
-#include <iostream>
-#include <stdlib.h>
-#include <string>
-#include "lightjson.h"
 #include "router.h"
-#include "UrlParser.h"
-#include "SimpleRedisClient.h"
-#include "redis.h"
-#include "Log.h"
+#include "url_dispatcher.h"
 #include "fcgi_stdio.h"
 
 using namespace std;
 
 void userCreate(Request req) {
-    Redis* redis = Redis::getInstance();
-    string key = req.getBody()["key"].toString();
-    int score = req.getBody()["score"].toInt();
-    string member = req.getBody()["user"].toString();
+    Redis* redis = Redis::GetInstance();
+    string key = req.GetBody()["key"].toString();
+    int score = req.GetBody()["score"].toInt();
+    string member = req.GetBody()["user"].toString();
     int result = redis->zadd(key.c_str(), score, member.c_str());
 
     char* log = new char[100];
     memset(log, 0x00, 100);
-    sprintf(log, "user create - key:%s score:%d name:%s", key.c_str(), score, member.c_str());
-    WRITELOG(log);
+    WRITELOG("user create - key:%s score:%d name:%s\n", key.c_str(), score, member.c_str());
     delete log;
 
     Json::Writer writer;
@@ -40,9 +28,9 @@ void userCreate(Request req) {
 }
 
 void userRead(Request req) {
-    Redis* redis = Redis::getInstance();
-    string key = req.getParameter()[":key"].toString();
-    string member = req.getParameter()[":member"].toString();
+    Redis* redis = Redis::GetInstance();
+    string key = req.GetParameter()["key"].toString();
+    string member = req.GetParameter()["member"].toString();
     char* result = redis->zscore(key.c_str(), member.c_str());
 
     Json::Writer writer;
@@ -52,10 +40,10 @@ void userRead(Request req) {
 }
 
 void userUpdate(Request req) {
-    Redis* redis = Redis::getInstance();
-    string key = req.getBody()["key"].toString();
-    int score = req.getBody()["score"].toInt();
-    string member = req.getBody()["user"].toString();
+    Redis* redis = Redis::GetInstance();
+    string key = req.GetBody()["key"].toString();
+    int score = req.GetBody()["score"].toInt();
+    string member = req.GetBody()["user"].toString();
     int result = redis->zadd(key.c_str(), score, member.c_str());
 
     Json::Writer writer;
@@ -65,9 +53,9 @@ void userUpdate(Request req) {
 }
 
 void userDelete(Request req) {
-    Redis* redis = Redis::getInstance();
-    string key = req.getBody()["key"].toString();
-    string member = req.getBody()["user"].toString();
+    Redis* redis = Redis::GetInstance();
+    string key = req.GetBody()["key"].toString();
+    string member = req.GetBody()["user"].toString();
     int result = redis->zrem(key.c_str(), member.c_str());
 
     Json::Writer writer;
@@ -77,9 +65,9 @@ void userDelete(Request req) {
 }
 
 void rankingIndividual(Request req) {
-    Redis* redis = Redis::getInstance();
-    string key = req.getParameter()[":key"].toString();
-    string member = req.getParameter()[":member"].toString();
+    Redis* redis = Redis::GetInstance();
+    string key = req.GetParameter()["key"].toString();
+    string member = req.GetParameter()["member"].toString();
     int result = redis->zrevrank(key.c_str(), member.c_str()) + 1;
 
     Json::Writer writer;
@@ -89,10 +77,10 @@ void rankingIndividual(Request req) {
 }
 
 void rankingList(Request req) {
-    Redis* redis = Redis::getInstance();
-    string key = req.getParameter()[":key"].toString();
-    int start = atoi(req.getParameter()[":start"].toString().c_str());
-    int end = atoi(req.getParameter()[":end"].toString().c_str());
+    Redis* redis = Redis::GetInstance();
+    string key = req.GetParameter()["key"].toString();
+    int start = atoi(req.GetParameter()["start"].toString().c_str());
+    int end = atoi(req.GetParameter()["end"].toString().c_str());
     char** result = redis->zrevrange(key.c_str(), start, end);
     int size = redis->zrevrangesize();
 
@@ -114,24 +102,24 @@ void loadFunctions() {
     Response rUserDelete("/user", "DELETE", userDelete);
     Response rRankingIndividual("/ranking/:key/:member", "GET", rankingIndividual);
     Response rRankingList("/ranking/:key/:start/:end", "GET", rankingList);
-    Router* router = Router::getInstance();
-    router->add(rUserCreate);
-    router->add(rUserRead);
-    router->add(rUserUpdate);
-    router->add(rUserDelete);
-    router->add(rRankingIndividual);
-    router->add(rRankingList);
-    WRITELOG("Load all functions");
+    Router* router = Router::GetInstance();
+    router->AddResponse(rUserCreate);
+    router->AddResponse(rUserRead);
+    router->AddResponse(rUserUpdate);
+    router->AddResponse(rUserDelete);
+    router->AddResponse(rRankingIndividual);
+    router->AddResponse(rRankingList);
+    WRITELOG("Load all functions\n");
 }
 
 int main(int argc, const char * argv[]) {
-    Router* router = Router::getInstance();
-    UrlParser* urlParser = UrlParser::GetInstance();
+    Router* router = Router::GetInstance();
+    UrlDispatcher* urlDispatcher = UrlDispatcher::GetInstance();
     loadFunctions();
-    WRITELOG("Server Start");
+    WRITELOG("Server Start\n");
     while (FCGI_Accept() >= 0) {
-        Request req = urlParser->GetRequest();
-        router->handle(req);
+        Request req = urlDispatcher->GetRequest();
+        router->Handle(req);
         //printf("Content-type: text/html \r\n\r\n <h1>TEST</h1><p>FCGI</p>");
     }
     return 0;

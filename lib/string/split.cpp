@@ -1,20 +1,7 @@
-//
-//  GlobalFunc.h
-//  server
-//
-//  Created by 정인중 on 2015. 8. 14..
-//  Copyright (c) 2015년 강남어린이들. All rights reserved.
-//
+#include "split.h"
 
-#ifndef server_GlobalFunc_h
-#define server_GlobalFunc_h
-
-#include <vector>
-#include <string>
-using namespace std;
-
-vector<std::string> split(const std::string & str, const std::string & delimiters) {
-    vector<std::string> v;
+std::vector<std::string> split(const std::string & str, const std::string & delimiters) {
+    std::vector<std::string> v;
     typename std::string::size_type start = 0;
     auto pos = str.find_first_of(delimiters, start);
     while (pos != std::string::npos) {
@@ -27,5 +14,3 @@ vector<std::string> split(const std::string & str, const std::string & delimiter
         v.emplace_back(str, start, str.length() - start);
     return v;
 }
-
-#endif

@@ -1,3 +1,3 @@
-sudo service lighttpd stop
+service lighttpd stop
 make
-sudo service lighttpd start
+service lighttpd start

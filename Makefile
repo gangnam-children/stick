@@ -1,38 +1,19 @@
-main.fcgi : main.o json.o GlobalFunc.h lightjson.h Log.o reader.o redis.o request.o response.o router.o SimpleRedisClient.o UrlParser.o writer.o
-	g++ -o main.fcgi main.o json.o GlobalFunc.o lightjson.h Log.o reader.o redis.o request.o response.o router.o SimpleRedisClient.o UrlParser.o writer.o -g -lfcgi -std=c++11
+CXX = g++ -std=c++11
 
-main.o : main.cpp
-	g++ -c -g main.cpp -std=c++11
+SRCS = lib/json/json.cpp lib/json/reader.cpp lib/json/writer.cpp lib/string/split.cpp \
+lib/log/Log.cpp lib/redis/SimpleRedisClient.cpp lib/redis/redis.cpp \
+src/request.cpp src/response.cpp src/router.cpp src/url_dispatcher.cpp src/main.cpp
+OBJS = $(SRCS:.cpp=.o)
+TARGET = bin/server.fcgi
+LIBS = -lfcgi
 
-json.o : json.cpp json.h
-	g++ -c -g json.cpp -std=c++11
+.SUFFIXES: .cpp .o
 
-Log.o : Log.cpp Log.h
-	g++ -c -g Log.cpp -std=c++11
+all : $(TARGET)
 
-reader.o : reader.cpp reader.h
-	g++ -c -g reader.cpp -std=c++11
+$(TARGET) : $(OBJS)
+	$(CXX) -o $@ $(OBJS) $(LIBS)
 
-redis.o : redis.cpp redis.h
-	g++ -c -g redis.cpp -std=c++11
+clean :
+	rm $(OBJS)
 
-request.o : request.cpp request.h
-	g++ -c -g request.cpp -std=c++11
-
-response.o : response.cpp response.h GlobalFunc.o lightjson.h Log.o
-	g++ -c -g response.cpp lightjson.h -std=c++11
-
-router.o : router.cpp router.h
-	g++ -c -g router.cpp -std=c++11
-
-SimpleRedisClient.o : SimpleRedisClient.cpp SimpleRedisClient.h
-	g++ -c -g SimpleRedisClient.cpp -std=c++11
-
-UrlParser.o : UrlParser.cpp UrlParser.h GlobalFunc.o
-	g++ -c -g UrlParser.cpp -std=c++11
-
-writer.o : writer.cpp writer.h
-	g++ -c -g writer.cpp -std=c++11
-
-GlobalFunc.o : GlobalFunc.cpp GlobalFunc.h
-	g++ -c -g GlobalFunc.cpp -std=c++11

@@ -13,7 +13,7 @@ class Log
 
 public:
 	static Log* GetInstance();
-	void trace( std::string file, int line, std::string func, std::string fmt, ...);
+	void trace(std::string file, int line, std::string func, const char* fmt, ...);
 private:
 	Log();
 	~Log();
