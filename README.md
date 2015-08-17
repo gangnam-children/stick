@@ -35,6 +35,8 @@
 
 #### Acquiring API keys
 
+Create your **Stick** accout. API keys will be automatically generated for you after signing up.
+
 #### Create ranking properties
 
 ## Record management
