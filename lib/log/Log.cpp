@@ -3,7 +3,7 @@
 #include<iostream>
 #include <stdarg.h>
 #include<string.h>
-#define LOG_PATH "server.log"
+#define LOG_PATH "/var/log/lighttpd/server.log"
 #define MAX_TEXT_BUFFER_SIZE 1024
 
 Log* Log::GetInstance()
