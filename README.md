@@ -4,18 +4,52 @@
 ## 시작하기
 
 #### API 키 발급
-
 **Stick** 계정을 생성하세요. 계정을 생성하기만 하면 API 키가 자동으로 발급됩니다.
 
 #### 랭킹 요소 생성하기
-
 누나 빨리 만들어 주세요 ㅠㅠ
 
 ## 레코드 관리
 
 #### 생성
+랭킹 요소를 생성한 다음, 해당 요소에 유저를 추가할 수 있습니다.
+
+|    키   |   타입  |                         설명                         |
+|--------|--------|------------------------------------------------------|
+| member | string | 레코드의 고유한 아이디입니다.                              |
+| score  | int    | 랭킹에 사용할 레코드의 점수입니다. 랭킹은 내림차순으로 정렬됩니다. |
+
+##### [ Request ]
+```
+GET /ranking/your_api_key HTTP/1.1
+Host: stick.rest:9000
+```
+
+##### [ Response ]
+```
+HTTP/1.1 201 Created
+Content-Type: text/json
+{
+    "result":"success"
+}
+```
 
 #### 읽기
+
+##### [ Request ]
+```
+GET /ranking/your_api_key/member HTTP/1.1
+Host: stick.rest:9000
+```
+
+##### [ Response ]
+```
+HTTP/1.1 302 Found
+Content-Type: text/json
+{
+    "rank":819324
+}
+```
 
 #### 수정
 
@@ -34,7 +68,6 @@
 ## Getting started
 
 #### Acquiring API keys
-
 Create your **Stick** accout. API keys will be automatically generated for you after signing up.
 
 #### Create ranking properties
