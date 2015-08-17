@@ -49,5 +49,6 @@ bool Response::IsMatch(Request& req) {
 }
 
 void Response::Execute(Request req) {
+    WRITELOG("[EXECUTE FUNCTION] %s", req.GetMethod().c_str())
     handler_(req);
 }

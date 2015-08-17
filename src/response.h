@@ -3,6 +3,7 @@
 
 #include "../lib/json/lightjson.h"
 #include "../lib/string/split.h"
+#include "../lib/log/Log.h"
 
 #include <vector>
 #include <string>

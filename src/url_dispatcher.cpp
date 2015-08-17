@@ -14,7 +14,8 @@ Request UrlDispatcher::GetRequest() {
     Json::Object parameter;
     Json::Object body;
     Json::Reader reader;
-    
+
+    WRITELOG("[GET REQUEST] %s %s", method.c_str(), route.c_str());
     if (method == "GET") {
         std::vector<std::string> params = split(std::getenv("QUERY_STRING"), "&");
         
