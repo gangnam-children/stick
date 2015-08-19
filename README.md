@@ -94,13 +94,13 @@ Content-Type: text/json
 특정 레코드를 삭제할 수 있습니다.
 
 | 키       | 타입    | 위치 | 설명                                                |
-|----------|--------|-----|----------------------------------------------------|
-| api_key | string | url | 관리 페이지에서 생성한 랭킹 요소의 키입니다.
-| id      | string | url | 레코드의 고유한 아이디입니다.
+|---------|--------|------|----------------------------------------------------|
+| api_key | string | url  | 관리 페이지에서 생성한 랭킹 요소의 키입니다.
+| id      | string | body | 레코드의 고유한 아이디입니다.
 
 ##### Request
 ```
-DELETE /ranking/your_api_key/record_id HTTP/1.1
+DELETE /ranking/your_api_key HTTP/1.1
 Host: stick.rest:9000
 ```
 
@@ -116,9 +116,66 @@ Content-Type: text/json
 # 랭킹
 
 ### 랭킹 가져오기
+레코드의 `id`를 이용하여 해당 레코드의 순위를 조회할 수 있습니다.
+
+| 키       | 타입    | 위치 | 설명                                                |
+|----------|--------|-----|----------------------------------------------------|
+| api_key | string | url | 관리 페이지에서 생성한 랭킹 요소의 키입니다.
+| id      | string | url | 레코드의 고유한 아이디입니다.
+
+##### Request
+```
+GET /ranking/your_api_key/record_id HTTP/1.1
+Host: stick.rest:9000
+{
+    "id":"record_id"
+}
+```
+
+##### Response
+```
+HTTP/1.1 200 OK
+Content-Type: text/json
+{
+    "rank":"2341"
+}
+```
 
 ### 랭킹 페이지 가져오기
+받아올 순위의 범위를 정해 해당 구간의 유저 목록을 가져올 수 있습니다. 한 번의 요청으로 최대 100개의 유저 목록을 받아올 수 있습니다.
 
+| 키       | 타입    | 위치 | 설명                                                |
+|----------|--------|-----|----------------------------------------------------|
+| api_key | string | url | 관리 페이지에서 생성한 랭킹 요소의 키입니다.
+| start   | string | url | 받아 올 구간의 시작 지점입니다.
+| end     | string | url | 받아 올 구간의 끝 지점입니다.
+
+##### Request
+```
+GET /ranking/your_api_key/1/3 HTTP/1.1
+Host: stick.rest:9000
+```
+
+##### Response
+```
+HTTP/1.1 200 OK
+Content-Type: text/json
+{
+    "test_record_1" : {
+        "score":33891,
+        "rank":1
+    },
+    "test_record_2" : {
+        "score":23459,
+        "rank":2
+    },
+    "test_record_3" : {
+        "score":975,
+        "rank":3
+    },
+
+}
+```
 
 # Introduce
 **Stick** is a real-time ranking service which can be easily used for any kind of platform. Because it is developed using [Redis](http://redis.io), [FastCGI](http://fastcgi), and C++, it can handle large amount of data without performance degradation and deal with immediate increase in network traffic without any problems. Now developers are not need to be concerned about how to develop a ranking system. Just send your data to **Stick**, and call API when you need a ranking of your data.
