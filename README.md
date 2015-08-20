@@ -142,7 +142,7 @@ Content-Type: text/json
 ```
 
 ### 랭킹 페이지 가져오기
-받아올 순위의 범위를 정해 해당 구간의 유저 목록을 가져올 수 있습니다. 한 번의 요청으로 최대 100개의 유저 목록을 받아올 수 있습니다.
+받아올 순위의 범위를 정해 해당 구간의 레코드 목록을 가져올 수 있습니다. 한 번의 요청으로 최대 100개의 유저 목록을 받아올 수 있습니다.
 
 | 키       | 타입    | 위치 | 설명                                                |
 |----------|--------|-----|----------------------------------------------------|
@@ -292,5 +292,63 @@ Content-Type: text/json
 # Ranking
 
 ### Get ranking
+By using record `id`, you can refer us to send the record's rank.
+
+| Key     | Type   | Location | Description                                  |
+|---------|--------|----------|----------------------------------------------|
+| api_key | string | url | Ranking property key you created in dashboard.
+| id      | string | url | Unique ID of the record.
+
+##### Request
+```
+GET /ranking/your_api_key/record_id HTTP/1.1
+Host: stick.rest:9000
+{
+    "id":"record_id"
+}
+```
+
+##### Response
+```
+HTTP/1.1 200 OK
+Content-Type: text/json
+{
+    "rank":"2341"
+}
+```
 
 ### Get ranking pages
+You can get get a list of records by assigning the range of rankings. The maximum size of the list per request is 100.
+
+| Key     | Type   | Location | Description                                  |
+|---------|--------|----------|----------------------------------------------|
+| api_key | string | url | Ranking property key you created in dashboard.
+| start   | string | url | The starting point of the range of rankings.
+| end     | string | url | The ending point of the range of rankings.
+
+##### Request
+```
+GET /ranking/your_api_key/1/3 HTTP/1.1
+Host: stick.rest:9000
+```
+
+##### Response
+```
+HTTP/1.1 200 OK
+Content-Type: text/json
+{
+    "test_record_1" : {
+        "score":33891,
+        "rank":1
+    },
+    "test_record_2" : {
+        "score":23459,
+        "rank":2
+    },
+    "test_record_3" : {
+        "score":975,
+        "rank":3
+    },
+
+}
+```
