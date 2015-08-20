@@ -2,11 +2,12 @@
 #define __server__url__dispatcher__
 
 #include "../lib/string/split.h"
-#include "../lib/log/Log.h"
 
 #include <string.h>
 #include "request.h"
 #include "fcgi_stdio.h"
+
+#include "../lib/log/Log.h" 
 
 class UrlDispatcher {
 public:
