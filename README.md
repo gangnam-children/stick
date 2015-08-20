@@ -4,10 +4,11 @@
 # 시작하기
 
 ### API 키 발급
-**Stick** 계정을 생성하세요. 계정을 생성하기만 하면 API 키가 자동으로 발급됩니다.
 
-### 랭킹 요소 생성하기
-누나 빨리 만들어 주세요 ㅠㅠ
+1. **Stick** 계정을 [생성](http://172.16.101.146:8080/register)하세요.
+2. 로그인 후 우측 상단의 *API 관리* 메뉴를 선택하세요.
+3. 적절한 랭킹 요소 이름을 입력한 뒤, *요소 추가* 버튼을 누르세요.
+4. 해당 요소에 대한 키가 생성됩니다.
 
 # 레코드 관리
 
@@ -183,9 +184,11 @@ Content-Type: text/json
 # Getting started
 
 ### Acquiring API keys
-Create your **Stick** accout. API keys will be automatically generated for you after signing up.
 
-### Create ranking properties
+1. [Create](http://172.16.101.146:8080/register) your **Stick** accout.
+2. Select *API manage* menu after sign in.
+3. Enter suitable ranking property name, and press *add property* button.
+4. The API Keys will be automatically generated.
 
 # Record management
 After creating ranking property, you can add record which have same property you have created previously.
