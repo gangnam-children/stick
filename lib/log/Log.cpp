@@ -1,8 +1,8 @@
 #include "Log.h"
-#include<time.h>
-#include<iostream>
+#include <time.h>
 #include <stdarg.h>
-#include<string.h>
+#include <string.h>
+
 #define LOG_PATH "/var/log/lighttpd/server.log"
 #define MAX_TEXT_BUFFER_SIZE 1024
 
@@ -15,19 +15,19 @@ Log* Log::GetInstance()
 
 Log::Log()
 {
-	mOutFile.open(LOG_PATH,std::ios_base::out | std::ios_base::app);
-
+	mOutFile.open(LOG_PATH, std::ios_base::out | std::ios_base::app);
 }
 Log::~Log()
 {	
-	if(mOutFile.is_open() == true)
+        if(mOutFile.is_open() == true)
 	{	
-		mOutFile.close();
+                mOutFile.close();
 	}
 }
 
 void Log::trace( std::string file, int line, std::string func, const char* fmt, ...)
 {
+
 	char buf[MAX_TEXT_BUFFER_SIZE] = { 0, };
 	va_list ap;
 
@@ -39,7 +39,6 @@ void Log::trace( std::string file, int line, std::string func, const char* fmt, 
 	struct tm t;
 	time(&currentTime);
 	t = *localtime(&currentTime);
-	
 	
 	mOutFile << "[" << t.tm_year + 1900 << "-";
 	mOutFile.width(2);
@@ -63,7 +62,6 @@ void Log::trace( std::string file, int line, std::string func, const char* fmt, 
 	mOutFile << t.tm_sec << "]  ";
 	
 	mOutFile << file << ":" << line << ":" << func << "  " << buf;
+        mOutFile.flush();
 }
-
-
 
