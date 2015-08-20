@@ -1,3 +1,6 @@
+#ifndef __redis__
+#define __redis__
+
 #include <stdlib.h>
 #include "SimpleRedisClient.h"
 
@@ -22,4 +25,6 @@ public:
     int zrevrangesize();
     int zrevrank(const char *key, const char *member);
 };
+
+#endif
 
