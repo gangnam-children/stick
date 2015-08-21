@@ -27,7 +27,7 @@ POST /user/your_api_key HTTP/1.1
 Host: stick.rest:9000
 Content-Type: text/json
 {
-    "id":"record_id"
+    "id":"record_id",
     "score":999
 }
 ```
@@ -79,7 +79,7 @@ PUT /user/your_api_key HTTP/1.1
 Host: stick.rest:9000
 Content-Type: text/json
 {
-    "id":"record_id"
+    "id":"record_id",
     "score":999
 }
 ```
@@ -203,7 +203,7 @@ After creating ranking property, you can add record which have same property you
 POST /user/your_api_key HTTP/1.1
 Host: stick.rest:9000
 {
-    "id":"record_id"
+    "id":"record_id",
     "score":999
 }
 ```
@@ -254,7 +254,7 @@ You can renew the score of the record.
 PUT /user/your_api_key HTTP/1.1
 Host: stick.rest:9000
 {
-    "id":"record_id"
+    "id":"record_id",
     "score":999
 }
 ```
