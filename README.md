@@ -23,8 +23,9 @@
 
 ##### Request
 ```
-POST /ranking/your_api_key HTTP/1.1
+POST /user/your_api_key HTTP/1.1
 Host: stick.rest:9000
+Content-Type: text/json
 {
     "id":"record_id"
     "score":999
@@ -50,7 +51,7 @@ Content-Type: text/json
 
 ##### Request
 ```
-GET /ranking/your_api_key/record_id HTTP/1.1
+GET /user/your_api_key/record_id HTTP/1.1
 Host: stick.rest:9000
 ```
 
@@ -74,8 +75,9 @@ Content-Type: text/json
 
 ##### Request
 ```
-PUT /ranking/your_api_key HTTP/1.1
+PUT /user/your_api_key HTTP/1.1
 Host: stick.rest:9000
+Content-Type: text/json
 {
     "id":"record_id"
     "score":999
@@ -95,13 +97,13 @@ Content-Type: text/json
 특정 레코드를 삭제할 수 있습니다.
 
 | 키       | 타입    | 위치 | 설명                                                |
-|---------|--------|------|----------------------------------------------------|
-| api_key | string | url  | 관리 페이지에서 생성한 랭킹 요소의 키입니다.
-| id      | string | body | 레코드의 고유한 아이디입니다.
+|---------|--------|-----|----------------------------------------------------|
+| api_key | string | url | 관리 페이지에서 생성한 랭킹 요소의 키입니다.
+| id      | string | url | 레코드의 고유한 아이디입니다.
 
 ##### Request
 ```
-DELETE /ranking/your_api_key HTTP/1.1
+DELETE /user/your_api_key/record_id HTTP/1.1
 Host: stick.rest:9000
 ```
 
@@ -128,9 +130,6 @@ Content-Type: text/json
 ```
 GET /ranking/your_api_key/record_id HTTP/1.1
 Host: stick.rest:9000
-{
-    "id":"record_id"
-}
 ```
 
 ##### Response
@@ -201,7 +200,7 @@ After creating ranking property, you can add record which have same property you
 
 ##### Request
 ```
-POST /ranking/your_api_key HTTP/1.1
+POST /user/your_api_key HTTP/1.1
 Host: stick.rest:9000
 {
     "id":"record_id"
@@ -228,7 +227,7 @@ You can request a score of the record by using record id.
 
 ##### Request
 ```
-GET /ranking/your_api_key/record_id HTTP/1.1
+GET /user/your_api_key/record_id HTTP/1.1
 Host: stick.rest:9000
 ```
 
@@ -252,7 +251,7 @@ You can renew the score of the record.
 
 ##### Request
 ```
-PUT /ranking/your_api_key HTTP/1.1
+PUT /user/your_api_key HTTP/1.1
 Host: stick.rest:9000
 {
     "id":"record_id"
@@ -279,7 +278,7 @@ You can delete a specific record.
 
 ##### Request
 ```
-DELETE /ranking/your_api_key/record_id HTTP/1.1
+DELETE /user/your_api_key/record_id HTTP/1.1
 Host: stick.rest:9000
 ```
 
@@ -306,9 +305,6 @@ By using record `id`, you can refer us to send the record's rank.
 ```
 GET /ranking/your_api_key/record_id HTTP/1.1
 Host: stick.rest:9000
-{
-    "id":"record_id"
-}
 ```
 
 ##### Response
