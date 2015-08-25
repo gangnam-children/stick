@@ -2,11 +2,13 @@
 
 void UserCreate(Request req) {
     Redis* redis = Redis::GetInstance();
+    redis3m::connection::ptr_t conn = redis->GetConnection();
     string key = req.GetParameter()["api_key"].toString();
     int score = req.GetBody()["score"].toInt();
     string member = req.GetBody()["id"].toString();
-    int result = redis->zadd(key.c_str(), score, member.c_str());
-    
+    int result = conn->run(redis3m::command("ZADD") << key << score << member);
+    redis->Release(conn);
+
     Json::Writer writer;
     Json::Object obj;
     obj["result"] = result;
@@ -17,10 +19,12 @@ void UserCreate(Request req) {
 
 void UserRead(Request req) {
     Redis* redis = Redis::GetInstance();
+    redis3m::connection::ptr_t conn = redis->GetConnection();
     string key = req.GetParameter()["api_key"].toString();
     string member = req.GetParameter()["id"].toString();
-    char* result = redis->zscore(key.c_str(), member.c_str());
-    
+    int result = conn->run(redis3m::command("ZSCORE") << key << member);
+    redis->Release(conn);
+ 
     Json::Writer writer;
     Json::Object obj;
     obj["score"] = result;
@@ -31,11 +35,13 @@ void UserRead(Request req) {
 
 void UserUpdate(Request req) {
     Redis* redis = Redis::GetInstance();
+    redis3m::connection::ptr_t conn = redis->GetConnection();
     string key = req.GetParameter()["api_key"].toString();
     int score = req.GetBody()["score"].toInt();
     string member = req.GetBody()["id"].toString();
-    int result = redis->zadd(key.c_str(), score, member.c_str());
-    
+    int result = conn->run(redis3m::command("ZADD") << key << score << member);
+    redis->Release(conn);
+
     Json::Writer writer;
     Json::Object obj;
     obj["result"] = result;
@@ -46,10 +52,12 @@ void UserUpdate(Request req) {
 
 void UserDelete(Request req) {
     Redis* redis = Redis::GetInstance();
+    redis3m::connection::ptr_t conn = redis->GetConnection();
     string key = req.GetParameter()["api_key"].toString();
     string member = req.GetParameter()["id"].toString();
-    int result = redis->zrem(key.c_str(), member.c_str());
-    
+    int result = conn->run(redis3m::command("ZREM") << key << member);
+    redis->Release(conn);
+
     Json::Writer writer;
     Json::Object obj;
     obj["result"] = result;

@@ -5,6 +5,8 @@
 #include "../lib/string/split.h"
 #include "../lib/redis/redis.h"
 
+#include <redis3m/redis3m.hpp>
+#include <vector>
 #include "router.h"
 #include "url_dispatcher.h"
 #include "fcgi_stdio.h"

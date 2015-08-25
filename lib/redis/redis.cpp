@@ -2,10 +2,19 @@
 #include <cstdlib>
 
 Redis::Redis() {
+    this->pool = redis3m::simple_pool::create("127.0.0.1");
     rc.setHost("127.0.0.1");
     rc.auth("home");
     rc.LogLevel(0);
 };
+
+redis3m::connection::ptr_t Redis::GetConnection() {
+    return this->pool->get();
+}
+
+void Redis::Release(redis3m::connection::ptr_t conn) {
+    return this->pool->put(conn);
+}
 
 int Redis::zadd(const char *key, int score, const char *member) {
     return rc.zadd(key, score, member);

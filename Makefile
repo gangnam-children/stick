@@ -6,7 +6,7 @@ src/request.cpp src/response.cpp src/router.cpp src/url_dispatcher.cpp src/main.
 src/user.cpp src/ranking.cpp
 OBJS = $(SRCS:.cpp=.o)
 TARGET = bin/server.fcgi
-LIBS = -lfcgi
+LIBS = -lfcgi -lredis3m
 
 .SUFFIXES: .cpp .o
 

@@ -2,10 +2,12 @@
 
 void RankingIndividual(Request req) {
     Redis* redis = Redis::GetInstance();
+    redis3m::connection::ptr_t conn = redis->GetConnection();
     string key = req.GetParameter()["api_key"].toString();
     string member = req.GetParameter()["id"].toString();
-    int result = redis->zrevrank(key.c_str(), member.c_str()) + 1;
-    
+    int result = conn->run(redis3m::command("ZREVRANK") << key << member);
+    redis->Release(conn);
+  
     Json::Writer writer;
     Json::Object obj;
     obj["rank"] = result;
@@ -16,6 +18,7 @@ void RankingIndividual(Request req) {
 
 void RankingList(Request req) {
     Redis* redis = Redis::GetInstance();
+    redis3m::connection::ptr_t conn = redis->GetConnection();
     string key = req.GetParameter()["api_key"].toString();
     int start = atoi(req.GetParameter()["start"].toString().c_str());
     int end = atoi(req.GetParameter()["end"].toString().c_str());
@@ -29,4 +32,21 @@ void RankingList(Request req) {
     printf("Content-type: text/html \r\n\r\n %s", writer.encode(obj).c_str());
     
     WRITELOG("[RANKING LIST] key:%s start:%d end:%d\n", key.c_str(), start, end);
+}
+
+void RankingRandom(Request req) {
+    Redis* redis = Redis::GetInstance();
+    redis3m::connection::ptr_t conn = redis->GetConnection();
+    string key = req.GetParameter()["api_key"].toString();
+    int id = rand() % 1000000;
+    string member = to_string(id);
+    int result = conn->run(redis3m::command("ZREVRANK") << key << member);
+    redis->Release(conn);
+
+    Json::Writer writer;
+    Json::Object obj;
+    obj["rank"] = result;
+    printf("Content-type: text/json \r\n\r\n %s", writer.encode(obj).c_str());
+
+    WRITELOG("[RANKING INDIVIDUAL] key:%s member:%s result:%d\n", key.c_str(), member.c_str(), result);
 }

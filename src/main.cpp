@@ -33,6 +33,7 @@ void LoadFunctions() {
     Response rUserDelete("/user/:api_key/:id", "DELETE", UserDelete);
     Response rRankingIndividual("/ranking/:api_key/:id", "GET", RankingIndividual);
     Response rRankingList("/ranking/:api_key/:start/:end", "GET", RankingList);
+    Response rRankingRandom("/ranking_random/:api_key", "GET", RankingRandom);
     Router* router = Router::GetInstance();
     router->AddResponse(rUserCreate);
     router->AddResponse(rUserRead);
@@ -40,5 +41,6 @@ void LoadFunctions() {
     router->AddResponse(rUserDelete);
     router->AddResponse(rRankingIndividual);
     router->AddResponse(rRankingList);
+    router->AddResponse(rRankingRandom);
     WRITELOG("Load all functions\n");
 }
