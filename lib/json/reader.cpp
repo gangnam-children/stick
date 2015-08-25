@@ -171,7 +171,7 @@ Value Reader::parseArray() {
             complete = true;
             break;
         } else if (token == TOKEN_NONE) {
-            
+
         } else if (token == TOKEN_COMMA) {
             
         } else {
@@ -193,17 +193,26 @@ Value Reader::parseObject() {
             complete = true;
             break;
         } else if (token == TOKEN_NONE) {
-            //return Value();
+
         } else if (token == TOKEN_COMMA) {
             
         } else {
             Value key = parseString();
             if (key.type() == NIL)
                 return Value();
-            token = nextToken();
+
+            do {
+              token = nextToken();
+            } while (token == TOKEN_NONE);
+
             if (token != TOKEN_COLON)
                 return Value();
-            
+
+            do {
+              token = nextToken();
+            } while (token == TOKEN_NONE);
+            index--;
+
             Value val = parse();
             obj[key] = val;
         }
